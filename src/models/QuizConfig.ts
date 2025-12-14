@@ -9,11 +9,14 @@ import connectDB from '@/lib/db';
  * - How many questions each student sees
  * - What percentage is needed to pass
  * - Whether the quiz is currently active
+ * - WhatsApp contact details for follow-up
  */
 export interface IQuizConfig extends Document {
     questionLimit: number;      // Maximum questions per quiz (e.g., 10, 15, 20)
     passPercentage: number;     // Minimum % to pass (e.g., 60)
     isActive: boolean;          // Enable/disable quiz for students
+    whatsappNumber: string;     // WhatsApp contact number (with country code)
+    whatsappMessage: string;    // Pre-filled message template for WhatsApp
     updatedAt: Date;
 }
 
@@ -35,6 +38,15 @@ const QuizConfigSchema = new Schema<IQuizConfig>({
     isActive: {
         type: Boolean,
         default: true,
+    },
+    whatsappNumber: {
+        type: String,
+        default: '',
+        trim: true,
+    },
+    whatsappMessage: {
+        type: String,
+        default: 'Hi! I have completed the internship quiz.\n\n📊 My Score: {{score}}/{{total}} ({{percentage}}%)\n📝 Status: {{status}}\n\nWhat is my next step?',
     },
     updatedAt: {
         type: Date,
@@ -62,6 +74,8 @@ export async function getQuizConfig(): Promise<IQuizConfig> {
             questionLimit: 10,
             passPercentage: 60,
             isActive: true,
+            whatsappNumber: '',
+            whatsappMessage: 'Hi! I have completed the internship quiz.\n\n📊 My Score: {{score}}/{{total}} ({{percentage}}%)\n📝 Status: {{status}}\n\nWhat is my next step?',
         });
     }
 

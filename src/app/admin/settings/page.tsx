@@ -13,6 +13,8 @@ interface QuizConfig {
     questionLimit: number;
     passPercentage: number;
     isActive: boolean;
+    whatsappNumber: string;
+    whatsappMessage: string;
     updatedAt: string;
 }
 
@@ -35,6 +37,8 @@ export default function SettingsPage() {
     const [questionLimit, setQuestionLimit] = useState('10');
     const [passPercentage, setPassPercentage] = useState('60');
     const [isActive, setIsActive] = useState(true);
+    const [whatsappNumber, setWhatsappNumber] = useState('');
+    const [whatsappMessage, setWhatsappMessage] = useState('');
 
     // Fetch current configuration on mount
     useEffect(() => {
@@ -52,6 +56,8 @@ export default function SettingsPage() {
                 setQuestionLimit(String(data.config.questionLimit));
                 setPassPercentage(String(data.config.passPercentage));
                 setIsActive(data.config.isActive);
+                setWhatsappNumber(data.config.whatsappNumber || '');
+                setWhatsappMessage(data.config.whatsappMessage || '');
             } else {
                 setError(data.error || 'Failed to load configuration');
             }
@@ -90,6 +96,8 @@ export default function SettingsPage() {
                     questionLimit: limit,
                     passPercentage: percentage,
                     isActive,
+                    whatsappNumber,
+                    whatsappMessage,
                 }),
             });
 
@@ -194,7 +202,7 @@ export default function SettingsPage() {
                             onClick={() => setIsActive(!isActive)}
                             className={`
                                 relative w-14 h-7 rounded-full transition-colors duration-200
-                                ${isActive ? 'bg-[#39FF14]' : 'bg-gray-600'}
+                            ${isActive ? 'bg-white' : 'bg-gray-600'}
                             `}
                         >
                             <span
@@ -215,6 +223,49 @@ export default function SettingsPage() {
                                 </span>
                             )}
                         </p>
+                    </div>
+
+                    {/* WhatsApp Configuration Section */}
+                    <div className="pt-6 border-t border-[#333]">
+                        <h3 className="text-lg font-medium text-white mb-4">WhatsApp Settings</h3>
+
+                        {/* WhatsApp Number */}
+                        <div className="mb-4">
+                            <label className="block text-sm font-medium text-gray-300 mb-2">
+                                WhatsApp Number
+                            </label>
+                            <Input
+                                type="text"
+                                value={whatsappNumber}
+                                onChange={(e) => setWhatsappNumber(e.target.value)}
+                                placeholder="e.g., +91XXXXXXXXXX"
+                            />
+                            <p className="mt-1 text-sm text-gray-500">
+                                Enter phone number with country code (leave empty to let users
+                                choose contact)
+                            </p>
+                        </div>
+
+                        {/* WhatsApp Message Template */}
+                        <div>
+                            <label className="block text-sm font-medium text-gray-300 mb-2">
+                                Message Template
+                            </label>
+                            <textarea
+                                value={whatsappMessage}
+                                onChange={(e) => setWhatsappMessage(e.target.value)}
+                                rows={5}
+                                className="w-full bg-[#1a1a1a] border border-[#333] rounded-lg p-3 text-white placeholder-gray-500 focus:outline-none focus:border-white transition-colors"
+                                placeholder="Enter the message template..."
+                            />
+                            <p className="mt-1 text-sm text-gray-500">
+                                Use placeholders:{' '}
+                                <code className="text-gray-400">{'{{score}}'}</code>,{' '}
+                                <code className="text-gray-400">{'{{total}}'}</code>,{' '}
+                                <code className="text-gray-400">{'{{percentage}}'}</code>,{' '}
+                                <code className="text-gray-400">{'{{status}}'}</code>
+                            </p>
+                        </div>
                     </div>
 
                     {/* Last Updated Info */}

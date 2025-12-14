@@ -133,6 +133,8 @@ export async function POST(request: NextRequest) {
                 percentage: Math.round(percentage),
                 pass,
                 passPercentage: config.passPercentage,
+                whatsappNumber: config.whatsappNumber,
+                whatsappMessage: config.whatsappMessage,
             },
         });
     } catch (error) {

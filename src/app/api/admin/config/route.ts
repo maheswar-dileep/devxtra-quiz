@@ -28,6 +28,8 @@ export async function GET() {
                 questionLimit: config.questionLimit,
                 passPercentage: config.passPercentage,
                 isActive: config.isActive,
+                whatsappNumber: config.whatsappNumber,
+                whatsappMessage: config.whatsappMessage,
                 updatedAt: config.updatedAt,
             },
         });
@@ -64,13 +66,15 @@ export async function PUT(request: NextRequest) {
         await connectDB();
 
         const body = await request.json();
-        const { questionLimit, passPercentage, isActive } = body;
+        const { questionLimit, passPercentage, isActive, whatsappNumber, whatsappMessage } = body;
 
         // Build update object with only provided fields
         const updateData: Partial<{
             questionLimit: number;
             passPercentage: number;
             isActive: boolean;
+            whatsappNumber: string;
+            whatsappMessage: string;
         }> = {};
 
         // Validate and add questionLimit if provided
@@ -110,6 +114,17 @@ export async function PUT(request: NextRequest) {
             );
         }
 
+        // Add whatsappNumber if provided
+        if (whatsappNumber !== undefined) {
+            // Clean up phone number - remove spaces and ensure it starts with +
+            updateData.whatsappNumber = String(whatsappNumber).trim();
+        }
+
+        // Add whatsappMessage if provided
+        if (whatsappMessage !== undefined) {
+            updateData.whatsappMessage = String(whatsappMessage);
+        }
+
         // Update or create config (upsert)
         const config = await QuizConfig.findOneAndUpdate(
             {},
@@ -123,6 +138,8 @@ export async function PUT(request: NextRequest) {
                 questionLimit: config.questionLimit,
                 passPercentage: config.passPercentage,
                 isActive: config.isActive,
+                whatsappNumber: config.whatsappNumber,
+                whatsappMessage: config.whatsappMessage,
                 updatedAt: config.updatedAt,
             },
         });

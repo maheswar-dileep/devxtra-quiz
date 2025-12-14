@@ -113,7 +113,7 @@ export default function QuizPage() {
             {/* Header */}
             <header className="p-4 md:p-6 border-b border-[#222]">
                 <div className="max-w-3xl mx-auto">
-                    <h1 className="text-xl font-bold text-[#39FF14] mb-4">Quiz Time</h1>
+                    <h1 className="text-xl font-bold text-white mb-4">Quiz Time</h1>
                     <ProgressBar current={currentIndex} total={questions.length} />
                 </div>
             </header>
