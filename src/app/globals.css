@@ -1,26 +1,224 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+    --background: #000000;
+    --foreground: #ffffff;
+    --neon-green: #39ff14;
+    --neon-green-dim: #2db811;
+    --card-bg: #111111;
+    --card-border: #222222;
+    --input-bg: #1a1a1a;
+    --error: #ff4444;
+    --success: #39ff14;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+    --color-neon: var(--neon-green);
+    --color-neon-dim: var(--neon-green-dim);
+    --color-card: var(--card-bg);
+    --color-card-border: var(--card-border);
+    --color-input: var(--input-bg);
+    --color-error: var(--error);
+    --color-success: var(--success);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+    background: var(--background);
+    color: var(--foreground);
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    min-height: 100vh;
+}
+
+/* Neon glow effect */
+.neon-glow {
+    box-shadow: 0 0 5px var(--neon-green), 0 0 10px var(--neon-green), 0 0 20px var(--neon-green),
+        0 0 40px var(--neon-green-dim);
+}
+
+.neon-glow-sm {
+    box-shadow: 0 0 5px var(--neon-green), 0 0 10px var(--neon-green-dim);
+}
+
+.neon-text {
+    text-shadow: 0 0 5px var(--neon-green), 0 0 10px var(--neon-green),
+        0 0 20px var(--neon-green-dim);
+}
+
+/* Button styles */
+.btn-primary {
+    background: var(--neon-green);
+    color: #000000;
+    font-weight: 600;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-primary:hover:not(:disabled) {
+    box-shadow: 0 0 10px var(--neon-green), 0 0 20px var(--neon-green),
+        0 0 30px var(--neon-green-dim);
+    transform: translateY(-2px);
+}
+
+.btn-primary:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.btn-secondary {
+    background: transparent;
+    color: var(--neon-green);
+    font-weight: 600;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    transition: all 0.3s ease;
+    border: 2px solid var(--neon-green);
+    cursor: pointer;
+}
+
+.btn-secondary:hover {
+    background: var(--neon-green);
+    color: #000000;
+}
+
+/* Card styles */
+.card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+}
+
+.card-hover:hover {
+    border-color: var(--neon-green);
+    box-shadow: 0 0 10px rgba(57, 255, 20, 0.2);
+}
+
+/* Input styles */
+.input-field {
+    background: var(--input-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 0.5rem;
+    padding: 0.75rem 1rem;
+    color: var(--foreground);
+    width: 100%;
+    transition: all 0.3s ease;
+}
+
+.input-field:focus {
+    outline: none;
+    border-color: var(--neon-green);
+    box-shadow: 0 0 5px rgba(57, 255, 20, 0.3);
+}
+
+.input-field::placeholder {
+    color: #666666;
+}
+
+/* Option card styles */
+.option-card {
+    background: var(--card-bg);
+    border: 2px solid var(--card-border);
+    border-radius: 0.75rem;
+    padding: 1rem 1.25rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.option-card:hover {
+    border-color: var(--neon-green);
+    background: rgba(57, 255, 20, 0.05);
+}
+
+.option-card.selected {
+    border-color: var(--neon-green);
+    background: rgba(57, 255, 20, 0.1);
+    box-shadow: 0 0 10px rgba(57, 255, 20, 0.2);
+}
+
+/* Progress dots */
+.progress-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--card-border);
+    transition: all 0.3s ease;
+}
+
+.progress-dot.active {
+    background: var(--neon-green);
+    box-shadow: 0 0 5px var(--neon-green);
+}
+
+.progress-dot.completed {
+    background: var(--neon-green-dim);
+}
+
+/* Loading spinner */
+.spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid var(--card-border);
+    border-top-color: var(--neon-green);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade-in {
+    animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes pulse-glow {
+    0%,
+    100% {
+        box-shadow: 0 0 5px var(--neon-green), 0 0 10px var(--neon-green);
+    }
+    50% {
+        box-shadow: 0 0 10px var(--neon-green), 0 0 20px var(--neon-green),
+            0 0 30px var(--neon-green-dim);
+    }
+}
+
+.pulse-glow {
+    animation: pulse-glow 2s ease-in-out infinite;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--background);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--card-border);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--neon-green-dim);
 }
