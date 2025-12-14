@@ -13,13 +13,20 @@ interface Question {
     options: string[];
 }
 
+interface QuizConfig {
+    questionLimit: number;
+    passPercentage: number;
+}
+
 export default function QuizPage() {
     const router = useRouter();
     const [questions, setQuestions] = useState<Question[]>([]);
+    const [questionIds, setQuestionIds] = useState<string[]>([]); // Store question IDs for submission
     const [currentIndex, setCurrentIndex] = useState(0);
     const [answers, setAnswers] = useState<(number | null)[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
+    const [config, setConfig] = useState<QuizConfig | null>(null);
 
     useEffect(() => {
         fetchQuestions();
@@ -34,8 +41,15 @@ export default function QuizPage() {
                 throw new Error(data.error || 'Failed to load questions');
             }
 
+            // Store questions and their IDs
             setQuestions(data.questions);
+            setQuestionIds(data.questions.map((q: Question) => q._id));
             setAnswers(new Array(data.questions.length).fill(null));
+
+            // Store config info
+            if (data.config) {
+                setConfig(data.config);
+            }
         } catch (err) {
             setError(err instanceof Error ? err.message : 'Failed to load questions');
         } finally {
@@ -62,8 +76,10 @@ export default function QuizPage() {
     };
 
     const handleFinish = () => {
-        // Store answers in sessionStorage
+        // Store answers AND question IDs in sessionStorage for submission
         sessionStorage.setItem('quizAnswers', JSON.stringify(answers));
+        sessionStorage.setItem('questionIds', JSON.stringify(questionIds));
+        sessionStorage.setItem('quizConfig', JSON.stringify(config));
         router.push('/quiz/details');
     };
 

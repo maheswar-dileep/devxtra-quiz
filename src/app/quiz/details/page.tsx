@@ -30,9 +30,10 @@ export default function DetailsPage() {
     const [submitError, setSubmitError] = useState<string | null>(null);
 
     useEffect(() => {
-        // Check if answers exist
+        // Check if answers and question IDs exist
         const answers = sessionStorage.getItem('quizAnswers');
-        if (!answers) {
+        const questionIds = sessionStorage.getItem('questionIds');
+        if (!answers || !questionIds) {
             router.push('/quiz');
         }
     }, [router]);
@@ -80,7 +81,9 @@ export default function DetailsPage() {
         setLoading(true);
 
         try {
+            // Get both answers and question IDs from sessionStorage
             const answers = JSON.parse(sessionStorage.getItem('quizAnswers') || '[]');
+            const questionIds = JSON.parse(sessionStorage.getItem('questionIds') || '[]');
 
             const response = await fetch('/api/quiz/submit', {
                 method: 'POST',
@@ -90,6 +93,7 @@ export default function DetailsPage() {
                 body: JSON.stringify({
                     ...formData,
                     answers,
+                    questionIds, // Include question IDs for randomized quiz scoring
                 }),
             });
 
@@ -99,9 +103,11 @@ export default function DetailsPage() {
                 throw new Error(data.error || 'Failed to submit quiz');
             }
 
-            // Store result and clear answers
+            // Store result and clear session data
             sessionStorage.setItem('quizResult', JSON.stringify(data.result));
             sessionStorage.removeItem('quizAnswers');
+            sessionStorage.removeItem('questionIds');
+            sessionStorage.removeItem('quizConfig');
 
             router.push('/quiz/result');
         } catch (err) {

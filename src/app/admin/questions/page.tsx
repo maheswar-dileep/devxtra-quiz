@@ -23,6 +23,13 @@ export default function QuestionsPage() {
     const [editingQuestion, setEditingQuestion] = useState<Question | null>(null);
     const [deleteConfirm, setDeleteConfirm] = useState<string | null>(null);
 
+    // JSON Import states
+    const [importModalOpen, setImportModalOpen] = useState(false);
+    const [jsonInput, setJsonInput] = useState('');
+    const [importing, setImporting] = useState(false);
+    const [importError, setImportError] = useState<string | null>(null);
+    const [importSuccess, setImportSuccess] = useState<string | null>(null);
+
     useEffect(() => {
         fetchQuestions();
     }, []);
@@ -102,6 +109,73 @@ export default function QuestionsPage() {
         setEditingQuestion(null);
     };
 
+    // Handle JSON import
+    const handleImport = async () => {
+        if (!jsonInput.trim()) {
+            setImportError('Please enter JSON data');
+            return;
+        }
+
+        try {
+            setImporting(true);
+            setImportError(null);
+            setImportSuccess(null);
+
+            // Validate JSON format first
+            let parsed;
+            try {
+                parsed = JSON.parse(jsonInput);
+            } catch {
+                setImportError('Invalid JSON format. Please check your syntax.');
+                return;
+            }
+
+            if (!Array.isArray(parsed)) {
+                setImportError('JSON must be an array of questions');
+                return;
+            }
+
+            const response = await fetch('/api/admin/questions/import', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: jsonInput,
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                setImportSuccess(`Successfully imported ${data.count} questions!`);
+                setJsonInput('');
+                await fetchQuestions();
+                setTimeout(() => {
+                    setImportModalOpen(false);
+                    setImportSuccess(null);
+                }, 2000);
+            } else {
+                if (data.details && Array.isArray(data.details)) {
+                    setImportError(data.details.slice(0, 3).join('\n'));
+                } else {
+                    setImportError(data.error || 'Import failed');
+                }
+            }
+        } catch (err) {
+            console.error('Import error:', err);
+            setImportError('Failed to import questions');
+        } finally {
+            setImporting(false);
+        }
+    };
+
+    // JSON Schema example for reference
+    const jsonSchemaExample = `[
+  {
+    "questionText": "What is 2 + 2?",
+    "options": ["3", "4", "5", "6"],
+    "correctAnswer": 1,
+    "difficulty": "easy"
+  }
+]`;
+
     const difficultyColors = {
         easy: 'bg-green-500/10 text-green-500 border-green-500/30',
         medium: 'bg-yellow-500/10 text-yellow-500 border-yellow-500/30',
@@ -125,23 +199,42 @@ export default function QuestionsPage() {
                     <h1 className="text-3xl font-bold text-white mb-2">Questions</h1>
                     <p className="text-gray-400">Manage your quiz questions</p>
                 </div>
-                <Button onClick={() => setModalOpen(true)}>
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="w-5 h-5"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                    >
-                        <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M12 4v16m8-8H4"
-                        />
-                    </svg>
-                    Add Question
-                </Button>
+                <div className="flex gap-3">
+                    <Button variant="secondary" onClick={() => setImportModalOpen(true)}>
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            className="w-5 h-5"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                        >
+                            <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"
+                            />
+                        </svg>
+                        Import JSON
+                    </Button>
+                    <Button onClick={() => setModalOpen(true)}>
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            className="w-5 h-5"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                        >
+                            <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                d="M12 4v16m8-8H4"
+                            />
+                        </svg>
+                        Add Question
+                    </Button>
+                </div>
             </div>
 
             {questions.length === 0 ? (
@@ -296,6 +389,82 @@ export default function QuestionsPage() {
                     >
                         Delete
                     </Button>
+                </div>
+            </Modal>
+
+            {/* JSON Import Modal */}
+            <Modal
+                isOpen={importModalOpen}
+                onClose={() => {
+                    setImportModalOpen(false);
+                    setJsonInput('');
+                    setImportError(null);
+                    setImportSuccess(null);
+                }}
+                title="Import Questions from JSON"
+                size="lg"
+            >
+                <div className="space-y-4">
+                    <p className="text-gray-400 text-sm">
+                        Paste a JSON array of questions below. Each question must have:
+                    </p>
+                    <ul className="text-sm text-gray-500 list-disc list-inside space-y-1">
+                        <li>
+                            <code className="text-[#39FF14]">questionText</code> - The question
+                            string
+                        </li>
+                        <li>
+                            <code className="text-[#39FF14]">options</code> - Array of exactly 4
+                            options
+                        </li>
+                        <li>
+                            <code className="text-[#39FF14]">correctAnswer</code> - Index (0-3) of
+                            correct option
+                        </li>
+                        <li>
+                            <code className="text-[#39FF14]">difficulty</code> - Optional:
+                            &quot;easy&quot;, &quot;medium&quot;, or &quot;hard&quot;
+                        </li>
+                    </ul>
+
+                    {/* Error/Success Messages */}
+                    {importError && (
+                        <div className="p-3 bg-red-500/10 border border-red-500/30 rounded-lg">
+                            <p className="text-red-400 text-sm whitespace-pre-line">
+                                {importError}
+                            </p>
+                        </div>
+                    )}
+                    {importSuccess && (
+                        <div className="p-3 bg-green-500/10 border border-green-500/30 rounded-lg">
+                            <p className="text-green-400 text-sm">{importSuccess}</p>
+                        </div>
+                    )}
+
+                    {/* JSON Input */}
+                    <textarea
+                        value={jsonInput}
+                        onChange={(e) => setJsonInput(e.target.value)}
+                        placeholder={jsonSchemaExample}
+                        className="w-full h-64 bg-[#1a1a1a] border border-[#333] rounded-lg p-3 text-white font-mono text-sm resize-none focus:outline-none focus:border-[#39FF14]"
+                    />
+
+                    {/* Action Buttons */}
+                    <div className="flex gap-3 justify-end">
+                        <Button
+                            variant="secondary"
+                            onClick={() => {
+                                setImportModalOpen(false);
+                                setJsonInput('');
+                                setImportError(null);
+                            }}
+                        >
+                            Cancel
+                        </Button>
+                        <Button onClick={handleImport} disabled={importing || !jsonInput.trim()}>
+                            {importing ? 'Importing...' : 'Import Questions'}
+                        </Button>
+                    </div>
                 </div>
             </Modal>
         </div>

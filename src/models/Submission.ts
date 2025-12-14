@@ -5,6 +5,7 @@ export interface ISubmission extends Document {
     email: string;
     mobile: string;
     answers: number[];
+    questionIds: string[];    // IDs of questions answered (for randomized quizzes)
     score: number;
     totalQuestions: number;
     pass: boolean;
@@ -30,6 +31,11 @@ const SubmissionSchema = new Schema<ISubmission>({
     },
     answers: {
         type: [Number],
+        required: true,
+        default: [],
+    },
+    questionIds: {
+        type: [String],
         required: true,
         default: [],
     },
