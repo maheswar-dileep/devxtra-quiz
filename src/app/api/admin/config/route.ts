@@ -106,23 +106,23 @@ export async function PUT(request: NextRequest) {
             updateData.isActive = Boolean(isActive);
         }
 
-        // Check if there's anything to update
-        if (Object.keys(updateData).length === 0) {
-            return NextResponse.json(
-                { error: 'No valid fields to update' },
-                { status: 400 }
-            );
-        }
-
         // Add whatsappNumber if provided
         if (whatsappNumber !== undefined) {
-            // Clean up phone number - remove spaces and ensure it starts with +
+            // Clean up phone number - remove spaces
             updateData.whatsappNumber = String(whatsappNumber).trim();
         }
 
         // Add whatsappMessage if provided
         if (whatsappMessage !== undefined) {
             updateData.whatsappMessage = String(whatsappMessage);
+        }
+
+        // Check if there's anything to update
+        if (Object.keys(updateData).length === 0) {
+            return NextResponse.json(
+                { error: 'No valid fields to update' },
+                { status: 400 }
+            );
         }
 
         // Update or create config (upsert)

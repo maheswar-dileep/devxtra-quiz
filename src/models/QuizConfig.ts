@@ -54,7 +54,12 @@ const QuizConfigSchema = new Schema<IQuizConfig>({
     },
 });
 
-const QuizConfig: Model<IQuizConfig> = mongoose.models.QuizConfig || mongoose.model<IQuizConfig>('QuizConfig', QuizConfigSchema);
+// Delete cached model to ensure schema updates are applied (for dev hot reloading)
+if (mongoose.models.QuizConfig) {
+    delete mongoose.models.QuizConfig;
+}
+
+const QuizConfig: Model<IQuizConfig> = mongoose.model<IQuizConfig>('QuizConfig', QuizConfigSchema);
 
 export default QuizConfig;
 
