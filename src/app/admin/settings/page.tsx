@@ -145,7 +145,7 @@ export default function SettingsPage() {
                     </div>
                 )}
                 {success && (
-                    <div className="mb-6 p-4 bg-green-500/10 border border-green-500/30 rounded-lg text-green-400">
+                    <div className="mb-6 p-4 bg-white/10 border border-white/30 rounded-lg text-white">
                         {success}
                     </div>
                 )}
@@ -214,7 +214,7 @@ export default function SettingsPage() {
                         </button>
                         <p className="mt-2 text-sm text-gray-500">
                             {isActive ? (
-                                <span className="text-green-400">
+                                <span className="text-white">
                                     Quiz is active - students can take the quiz
                                 </span>
                             ) : (

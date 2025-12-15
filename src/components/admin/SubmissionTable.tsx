@@ -82,16 +82,13 @@ export default function SubmissionTable({ submissions, loading }: SubmissionTabl
                             </td>
                             <td className="py-4 px-4 text-center">
                                 <span
-                                    className={`
-                    inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold
-                    ${
-                        submission.pass
-                            ? 'bg-[#39FF14]/10 text-[#39FF14] border border-[#39FF14]/30'
-                            : 'bg-red-500/10 text-red-500 border border-red-500/30'
-                    }
-                  `}
+                                    className={`px-3 py-1 rounded-full text-xs font-medium border ${
+                                        submission.pass
+                                            ? 'bg-white/10 text-white border-white/30'
+                                            : 'bg-red-500/10 text-red-500 border-red-500/30'
+                                    }`}
                                 >
-                                    {submission.pass ? 'PASSED' : 'FAILED'}
+                                    {submission.pass ? 'Passed' : 'Failed'}
                                 </span>
                             </td>
                             <td className="py-4 px-4 text-right text-gray-400 text-sm hidden sm:table-cell">

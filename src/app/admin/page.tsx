@@ -81,7 +81,7 @@ export default function AdminDashboard() {
                 <StatsCard
                     title="Passed"
                     value={loading ? '...' : stats?.passed || 0}
-                    color="green"
+                    color="white"
                     icon={
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -147,7 +147,7 @@ export default function AdminDashboard() {
             <Card>
                 <div className="flex items-center justify-between mb-6">
                     <h2 className="text-xl font-semibold text-white">Recent Submissions</h2>
-                    <a href="/admin/submissions" className="text-[#39FF14] hover:underline text-sm">
+                    <a href="/admin/submissions" className="text-white hover:underline text-sm">
                         View all →
                     </a>
                 </div>

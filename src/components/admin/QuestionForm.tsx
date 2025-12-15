@@ -84,7 +84,7 @@ export default function QuestionForm({ question, onSubmit, onCancel }: QuestionF
                     onChange={(e) =>
                         setFormData((prev) => ({ ...prev, questionText: e.target.value }))
                     }
-                    className="w-full px-4 py-3 rounded-lg bg-[#1a1a1a] border border-[#333] text-white placeholder-gray-500 focus:outline-none focus:border-[#39FF14] focus:shadow-[0_0_10px_rgba(57,255,20,0.3)] transition-all duration-300 min-h-[100px] resize-none"
+                    className="w-full px-4 py-3 rounded-lg bg-[#1a1a1a] border border-[#333] text-white placeholder-gray-500 focus:outline-none focus:border-white focus:shadow-[0_0_10px_rgba(255,255,255,0.3)] transition-all duration-300 min-h-[100px] resize-none"
                     placeholder="Enter your question here..."
                 />
             </div>
@@ -99,7 +99,7 @@ export default function QuestionForm({ question, onSubmit, onCancel }: QuestionF
                 flex-shrink-0 w-8 h-8 rounded-lg flex items-center justify-center font-semibold text-sm
                 ${
                     formData.correctAnswer === index
-                        ? 'bg-[#39FF14] text-black'
+                        ? 'bg-white text-black'
                         : 'bg-[#222] text-gray-400'
                 }
               `}
@@ -132,7 +132,7 @@ export default function QuestionForm({ question, onSubmit, onCancel }: QuestionF
                 w-12 h-12 rounded-lg font-semibold transition-all duration-200
                 ${
                     formData.correctAnswer === index
-                        ? 'bg-[#39FF14] text-black shadow-[0_0_15px_rgba(57,255,20,0.3)]'
+                        ? 'bg-white text-black shadow-[0_0_15px_rgba(255,255,255,0.3)]'
                         : 'bg-[#222] text-gray-400 hover:bg-[#333]'
                 }
               `}
@@ -157,7 +157,7 @@ export default function QuestionForm({ question, onSubmit, onCancel }: QuestionF
                 ${
                     formData.difficulty === level
                         ? level === 'easy'
-                            ? 'bg-green-500 text-white'
+                            ? 'bg-white text-black'
                             : level === 'medium'
                             ? 'bg-yellow-500 text-black'
                             : 'bg-red-500 text-white'

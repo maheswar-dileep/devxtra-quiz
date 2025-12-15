@@ -13,7 +13,7 @@ export default function Card({ children, className = '', hover = false }: CardPr
         bg-[#111] border border-[#222] rounded-xl p-6
         ${
             hover
-                ? 'transition-all duration-300 hover:border-[#39FF14] hover:shadow-[0_0_20px_rgba(57,255,20,0.2)]'
+                ? 'transition-all duration-300 hover:border-white hover:shadow-[0_0_20px_rgba(255,255,255,0.2)]'
                 : ''
         }
         ${className}

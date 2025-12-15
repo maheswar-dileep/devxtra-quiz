@@ -177,7 +177,7 @@ export default function QuestionsPage() {
 ]`;
 
     const difficultyColors = {
-        easy: 'bg-green-500/10 text-green-500 border-green-500/30',
+        easy: 'bg-white/10 text-white border-white/30',
         medium: 'bg-yellow-500/10 text-yellow-500 border-yellow-500/30',
         hard: 'bg-red-500/10 text-red-500 border-red-500/30',
     };
@@ -250,8 +250,8 @@ export default function QuestionsPage() {
                         <Card key={question._id} className="relative">
                             <div className="flex flex-col lg:flex-row lg:items-start gap-4">
                                 {/* Question number */}
-                                <div className="flex-shrink-0 w-10 h-10 bg-[#39FF14]/10 rounded-lg flex items-center justify-center">
-                                    <span className="text-[#39FF14] font-bold">{index + 1}</span>
+                                <div className="flex-shrink-0 w-10 h-10 bg-white/10 rounded-lg flex items-center justify-center">
+                                    <span className="text-white font-bold">{index + 1}</span>
                                 </div>
 
                                 {/* Question content */}
@@ -278,7 +278,7 @@ export default function QuestionsPage() {
                           flex items-center gap-2 p-2 rounded-lg text-sm
                           ${
                               optIndex === question.correctAnswer
-                                  ? 'bg-[#39FF14]/10 border border-[#39FF14]/30'
+                                  ? 'bg-white/10 border border-white/30'
                                   : 'bg-[#1a1a1a]'
                           }
                         `}
@@ -288,7 +288,7 @@ export default function QuestionsPage() {
                             w-6 h-6 rounded flex items-center justify-center text-xs font-semibold
                             ${
                                 optIndex === question.correctAnswer
-                                    ? 'bg-[#39FF14] text-black'
+                                    ? 'bg-white text-black'
                                     : 'bg-[#333] text-gray-400'
                             }
                           `}
@@ -410,19 +410,17 @@ export default function QuestionsPage() {
                     </p>
                     <ul className="text-sm text-gray-500 list-disc list-inside space-y-1">
                         <li>
-                            <code className="text-[#39FF14]">questionText</code> - The question
-                            string
+                            <code className="text-white">questionText</code> - The question string
                         </li>
                         <li>
-                            <code className="text-[#39FF14]">options</code> - Array of exactly 4
-                            options
+                            <code className="text-white">options</code> - Array of exactly 4 options
                         </li>
                         <li>
-                            <code className="text-[#39FF14]">correctAnswer</code> - Index (0-3) of
+                            <code className="text-white">correctAnswer</code> - Index (0-3) of
                             correct option
                         </li>
                         <li>
-                            <code className="text-[#39FF14]">difficulty</code> - Optional:
+                            <code className="text-white">difficulty</code> - Optional:
                             &quot;easy&quot;, &quot;medium&quot;, or &quot;hard&quot;
                         </li>
                     </ul>
@@ -436,8 +434,8 @@ export default function QuestionsPage() {
                         </div>
                     )}
                     {importSuccess && (
-                        <div className="p-3 bg-green-500/10 border border-green-500/30 rounded-lg">
-                            <p className="text-green-400 text-sm">{importSuccess}</p>
+                        <div className="p-3 bg-white/10 border border-white/30 rounded-lg">
+                            <p className="text-white text-sm">{importSuccess}</p>
                         </div>
                     )}
 
@@ -446,7 +444,7 @@ export default function QuestionsPage() {
                         value={jsonInput}
                         onChange={(e) => setJsonInput(e.target.value)}
                         placeholder={jsonSchemaExample}
-                        className="w-full h-64 bg-[#1a1a1a] border border-[#333] rounded-lg p-3 text-white font-mono text-sm resize-none focus:outline-none focus:border-[#39FF14]"
+                        className="w-full h-64 bg-[#1a1a1a] border border-[#333] rounded-lg p-3 text-white font-mono text-sm resize-none focus:outline-none focus:border-white"
                     />
 
                     {/* Action Buttons */}

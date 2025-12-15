@@ -17,7 +17,7 @@ export default function Loading({ size = 'md', text }: LoadingProps) {
             <div
                 className={`
           ${sizes[size]}
-          border-[#333] border-t-[#39FF14]
+          border-[#333] border-t-white
           rounded-full animate-spin
         `}
             />

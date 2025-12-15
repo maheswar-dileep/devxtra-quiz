@@ -91,11 +91,11 @@ export default function SubmissionsPage() {
               ${
                   filter === f.value
                       ? f.value === 'passed'
-                          ? 'bg-[#39FF14] text-black'
+                          ? 'bg-white text-black'
                           : f.value === 'failed'
                           ? 'bg-red-500 text-white'
-                          : 'bg-[#39FF14] text-black'
-                      : 'bg-[#222] text-gray-400 hover:bg-[#333]'
+                          : 'bg-white text-black'
+                      : 'bg-[#222] text-gray-400 hover:bg-[#333] hover:text-white'
               }
             `}
                     >

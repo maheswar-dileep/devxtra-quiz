@@ -17,13 +17,13 @@ export default function ProgressBar({ current, total }: ProgressBarProps) {
                 <span className="text-sm text-gray-400">
                     Question {current + 1} of {total}
                 </span>
-                <span className="text-sm text-[#39FF14]">{Math.round(percentage)}%</span>
+                <span className="text-sm text-white">{Math.round(percentage)}%</span>
             </div>
 
             {/* Progress bar */}
             <div className="w-full h-2 bg-[#222] rounded-full overflow-hidden">
                 <div
-                    className="h-full bg-[#39FF14] transition-all duration-500 ease-out rounded-full shadow-[0_0_10px_#39FF14]"
+                    className="h-full bg-white transition-all duration-500 ease-out rounded-full shadow-[0_0_10px_rgba(255,255,255,0.5)]"
                     style={{ width: `${percentage}%` }}
                 />
             </div>
@@ -39,7 +39,7 @@ export default function ProgressBar({ current, total }: ProgressBarProps) {
                   i < current
                       ? 'bg-[#2db811]'
                       : i === current
-                      ? 'bg-[#39FF14] shadow-[0_0_5px_#39FF14]'
+                      ? 'bg-white shadow-[0_0_5px_rgba(255,255,255,0.5)]'
                       : 'bg-[#333]'
               }
             `}

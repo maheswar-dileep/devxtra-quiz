@@ -8,10 +8,8 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-    title: 'Quiz App - Test Your Knowledge',
-    description:
-        'Take our interactive quiz and test your knowledge. No login required! Just start answering questions and see your results instantly.',
-    keywords: ['quiz', 'test', 'knowledge', 'exam', 'assessment'],
+    title: 'Devxtra Evaluation',
+    description: 'Evaluation portal for Devxtra offline bootcamp admission.',
 };
 
 export default function RootLayout({

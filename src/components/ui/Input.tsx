@@ -23,7 +23,7 @@ export default function Input({ label, error, className = '', id, ...props }: In
           w-full px-4 py-3 rounded-lg
           bg-[#1a1a1a] border border-[#333]
           text-white placeholder-gray-500
-          focus:outline-none focus:border-[#39FF14] focus:shadow-[0_0_10px_rgba(57,255,20,0.3)]
+          focus:outline-none focus:border-white focus:shadow-[0_0_10px_rgba(255,255,255,0.3)]
           transition-all duration-300
           ${error ? 'border-red-500' : ''}
           ${className}

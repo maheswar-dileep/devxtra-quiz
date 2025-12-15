@@ -20,8 +20,8 @@ export default function OptionButton({ label, text, selected, onClick }: OptionB
         text-left
         ${
             selected
-                ? 'border-[#39FF14] bg-[#39FF14]/10 shadow-[0_0_15px_rgba(57,255,20,0.2)]'
-                : 'border-[#333] bg-[#111] hover:border-[#39FF14] hover:bg-[#39FF14]/5'
+                ? 'border-white bg-white/10 shadow-[0_0_15px_rgba(255,255,255,0.2)]'
+                : 'border-[#333] bg-[#111] hover:border-white hover:bg-white/5'
         }
       `}
         >
@@ -32,7 +32,7 @@ export default function OptionButton({ label, text, selected, onClick }: OptionB
           flex items-center justify-center
           font-semibold text-lg
           transition-all duration-300
-          ${selected ? 'bg-[#39FF14] text-black' : 'bg-[#222] text-gray-400'}
+          ${selected ? 'bg-white text-black' : 'bg-[#222] text-gray-400'}
         `}
             >
                 {label}

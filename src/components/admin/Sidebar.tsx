@@ -115,7 +115,7 @@ export default function Sidebar({ onLogout }: SidebarProps) {
         <aside className="w-64 min-h-screen bg-[#111] border-r border-[#222] flex flex-col">
             {/* Logo */}
             <div className="p-6 border-b border-[#222]">
-                <h1 className="text-xl font-bold text-[#39FF14]">Quiz Admin</h1>
+                <h1 className="text-xl font-bold text-white">Devxtra Admin</h1>
             </div>
 
             {/* Navigation */}
@@ -132,7 +132,7 @@ export default function Sidebar({ onLogout }: SidebarProps) {
                     transition-all duration-200
                     ${
                         isActive
-                            ? 'bg-[#39FF14]/10 text-[#39FF14] border border-[#39FF14]/30'
+                            ? 'bg-white/10 text-white border border-white/30'
                             : 'text-gray-400 hover:text-white hover:bg-[#222]'
                     }
                   `}

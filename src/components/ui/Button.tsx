@@ -23,9 +23,9 @@ export default function Button({
 
     const variants = {
         primary:
-            'bg-[#39FF14] text-black hover:shadow-[0_0_20px_#39FF14] hover:-translate-y-0.5 disabled:opacity-50 disabled:hover:shadow-none disabled:hover:translate-y-0',
+            'bg-white text-black hover:shadow-[0_0_20px_rgba(255,255,255,0.4)] hover:-translate-y-0.5 disabled:opacity-50 disabled:hover:shadow-none disabled:hover:translate-y-0',
         secondary:
-            'bg-transparent text-[#39FF14] border-2 border-[#39FF14] hover:bg-[#39FF14] hover:text-black disabled:opacity-50',
+            'bg-transparent text-white border-2 border-white hover:bg-white hover:text-black disabled:opacity-50',
         danger: 'bg-red-600 text-white hover:bg-red-700 disabled:opacity-50',
     };
 
